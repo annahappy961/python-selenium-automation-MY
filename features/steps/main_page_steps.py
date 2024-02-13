@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from behave import given, when, then
-from time import sleep
+# from time import sleep
+from selenium.webdriver.support import expected_conditions as EC
 
 SEARCH_FIELD = (By.ID, 'search')
 SEARCH_ICON = (By.XPATH, "//button[@data-test='@web/Search/SearchButton']")
@@ -17,8 +18,7 @@ def open_target_main(context):
 @when('Search for {product}')
 def search_product(context, product):
     context.driver.find_element(*SEARCH_FIELD).send_keys(product)
-    context.driver.find_element(*SEARCH_ICON).click()
-    sleep(6)
+    context.wait.until(EC.presence_of_element_located(SEARCH_ICON)).click()
 
 
 @when('Click on Cart icon')
