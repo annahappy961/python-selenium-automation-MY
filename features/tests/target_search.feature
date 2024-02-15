@@ -21,4 +21,5 @@ Feature: Target.com search tests
     |search_word    |expected_result    |expected_part_url    |
     |coffee mug     |coffee mug         |coffee+mug           |
     |coffee         |coffee             |coffee               |
-    |tea            |tea                |tea                  |
+    |tea            |tea                |tea
+

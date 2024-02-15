@@ -16,18 +16,20 @@ Feature: Cart tests
 
   Scenario: User can add a product to cart
     Given Open Target main page
-    When Search for mug
+    When Search for candy bags
     And Click on Add to Cart button
     And Store product name
+    And Store product price
     And Confirm Add to Cart button from side navigation
     And Click View cart & check out from side navigation
     Then Verify cart has 1 item(s)
     And Verify cart has correct product name
+    And Verify cart has correct product price
 
 
   Scenario: User can add different products to cart
     Given Open target main page
-    When Search for Lunar New Year M&M's
+    When Search for candy
     And Click on Add to Cart button for product 1
     And Store product name to a list
     And Confirm Add to Cart button from side navigation

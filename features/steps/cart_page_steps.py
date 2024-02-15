@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from behave import given, when, then
-# from time import sleep
+from time import sleep
 from selenium.webdriver.support import expected_conditions as EC
 
 CART_HEADER = (By.CSS_SELECTOR, "h1[class*='StyledHeading']")
@@ -9,6 +9,7 @@ TOTAL_PRICE = (By.CSS_SELECTOR, "[data-test*='cart-summary-total'] p")
 SIGNIN_BTN_EMPTY_CART = (By.CSS_SELECTOR, "[class*='ButtonPrimary']")
 BULLSEYE_IMG_EMPY_CART = (By.CSS_SELECTOR, "[data-test='empty-cart-bullseye-img']")
 PRODUCT_NAME = (By.CSS_SELECTOR, "[data-test='cartItem-title']")
+PRODUCT_PRICE = (By.CSS_SELECTOR, "div[class*='StyledHeading']")
 CART_SUMMARY = (By.CSS_SELECTOR, "[class*='CartSummarySpan']")
 CART_ITEM_TITLE = (By.CSS_SELECTOR, "[data-test='cartItem-title']")
 
@@ -18,10 +19,11 @@ def open_cart(context):
     context.driver.get('https://www.target.com/cart')
 
 
-@then("Verify {expected_text} message is shown")
-def verify_cart_empty_message(context, expected_text):
-    actual_text = context.wait.until(EC.element_to_be_clickable(*CART_HEADER)).text
-    assert expected_text in actual_text, f"Expected {expected_text} but got {actual_text}"
+@then("Verify Your cart is empty message is shown")
+def verify_cart_empty_message(context):
+    sleep(10)
+    actual_text = context.driver.find_element(*CART_HEADER).text
+    assert "Your cart is empty" in actual_text, f"Expected 'Your cart is empty' but got {actual_text}"
 
 
 @then("Verify SignIn btn is clickable on empty cart page")
@@ -36,12 +38,12 @@ def verify_bullseye_empy_cart_seen(context):
 
 @then("Verify the Total Price is shown")
 def total_price_shown(context):
-    context.driver.find_element(*CART_SUMMARY_TOTAL)
+    context.wait.until(EC.presence_of_element_located(CART_SUMMARY_TOTAL), message='Element not located')
 
 
 @then("Verify cart has {amount} item(s)")
 def verify_cart_items(context, amount):
-    cart_summery = context.driver.find_element(*CART_SUMMARY).text
+    cart_summery = context.wait.until(EC.presence_of_element_located(CART_SUMMARY)).text
     assert amount in cart_summery, f"Expected items {amount} but got {cart_summery}"
 
 
@@ -49,6 +51,14 @@ def verify_cart_items(context, amount):
 def verify_product_name(context):
     actual_name = context.driver.find_element(*PRODUCT_NAME).text
     assert context.product_name in actual_name, f"Expected {context.product_name} but got {actual_name}"
+
+
+@then("Verify cart has correct product price")
+def verify_product_price(context):
+    actual_price = context.driver.find_element(*PRODUCT_PRICE).text
+    actual_price = actual_price.split()[0]
+    # print(actual_price)
+    assert actual_price == context.product_price, f"Expected {context.product_price} but got {actual_price}"
 
 
 @then('Verify cart has correct multiple products')
