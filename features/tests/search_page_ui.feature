@@ -1,7 +1,6 @@
 Feature: Test for Search page UI
 
-  Scenario: Verify each product has an image amd a name
+  Scenario: Verify that user can see product title and product image
     Given Open Target main page
-    When Search for candy
-    Then Verify 29 images in shown
-    And Verify 29 names in shown
+    When Search for candy toy
+    Then Verify that every product has a title and an image
