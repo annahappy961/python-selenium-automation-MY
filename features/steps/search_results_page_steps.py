@@ -11,7 +11,9 @@ SIDE_NAV_PRODUCT_NAME = (By.CSS_SELECTOR, "[data-test='content-wrapper'] h4")
 SIDE_NAV_PREV_BUTTON = (By.CSS_SELECTOR, "button[aria-label='Previous']")
 PRODUCT_NAME = (By.CSS_SELECTOR, "[data-test*='product-title']")
 PRODUCT_PRICE = (By.CSS_SELECTOR, "[class*='h-text-bold h-display']")
-PRODUCT_IMG = (By.CSS_SELECTOR, "[class*='StyledCol'] [class*='ProductCardImageWrapper']")
+PRODUCT_TILE = (By.CSS_SELECTOR, "[data-test='@web/site-top-of-funnel/ProductCardWrapper']")
+PRODUCT_TITLE = (By.CSS_SELECTOR, "[data-test='product-title']")
+PRODUCT_IMG = (By.CSS_SELECTOR, "[class*='ProductCardImage']")
 
 
 @then('Search results for {expected_result} are shown')
@@ -65,6 +67,12 @@ def click_add_to_cart_by_index(context, i):
 @when('Store product name to a list')
 def store_product_names(context):
     context.wait.until(EC.presence_of_element_located(SIDE_NAV_PRODUCT_NAME), message='Side nav did not open')
+# Why is it here?
+
+    # TARGET_HELP_H2 = (By.XPATH, '')
+    # context.wait.until(
+    #     EC.text_to_be_present_in_element(TARGET_HELP_H2, 'Target Help'),
+    #     message="'Target Help' text did not appear")
     current_product_name = context.driver.find_element(*SIDE_NAV_PRODUCT_NAME).text
     try:  # try to add a product to context.product_names:
         context.product_names.append(current_product_name)
@@ -72,32 +80,20 @@ def store_product_names(context):
         context.product_names = [current_product_name]
 
 
-def scroll_and_verify_elements(context, element_locator, expected_amount):
-    # Initial scroll down
-    context.driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
+@then("Verify that every product has a title and an image")
+def verify_products_name_img(context):
+    # To see All listings
+    context.driver.execute_script("window.scrollBy(0, 2000)", "")
+    sleep(2)
+    context.driver.execute_script("window.scrollBy(0, 2000)", "")
+    sleep(2)
+    context.driver.execute_script("window.scrollBy(0, 2000)", "")
 
-    # Wait for the initial set of elements to load
-    context.wait.until(EC.visibility_of_all_elements_located(element_locator))
+    all_products = context.driver.find_elements(*PRODUCT_TILE)
 
-    # Check the number of elements after the initial scroll
-    actual_amount = len(context.driver.find_elements(*element_locator))
+    for product in all_products:
 
-    # Perform additional scrolls until the expected amount is reached
-    while actual_amount < expected_amount:
-        context.driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
-        context.wait.until(EC.visibility_of_all_elements_located(element_locator))
-        actual_amount = len(context.driver.find_elements(*element_locator))
-
-    assert actual_amount == expected_amount, f"Expected {expected_amount} but got {actual_amount}"
-
-
-@then("Verify {amount} names in shown")
-def verify_product_name_shown(context, amount):
-    expected_names = int(amount)
-    scroll_and_verify_elements(context, PRODUCT_NAME, expected_names)
-
-
-@then("Verify {amount} images in shown")
-def verify_product_name_shown(context, amount):
-    expected_amount = int(amount)
-    scroll_and_verify_elements(context, PRODUCT_IMG, expected_amount)
+        title = product.find_element(*PRODUCT_TITLE).text
+        print(title)
+        assert title, "Product title not shown"
+        product.find_element(*PRODUCT_IMG)
