@@ -27,15 +27,16 @@ def open_cart_from_side_navigation(context):
 
 @then('Verify user can click through colors')
 def click_and_verify_colors(context):
-    expected_colors = ['Black', 'Brown', 'Cream']
+    expected_colors = ["Blue Tint", "Denim Blue", "Marine"]
     actual_colors = []
 
-    colors = context.driver.find_elements(*COLOR_OPTIONS)  # [webelement1, webelement2, webelement3]
+    context.wait.until(EC.element_to_be_clickable(COLOR_OPTIONS))
+    colors = context.driver.find_elements(*COLOR_OPTIONS)
     for color in colors[:3]:
         color.click()
-        selected_color = context.driver.find_element(*SELECTED_COLOR).text  # 'Color\nBlack'
-        selected_color = selected_color.split('\n')[1]  # Black
+        selected_color = context.driver.find_element(*SELECTED_COLOR).text
+        selected_color = selected_color.split("\n")[1]
         actual_colors.append(selected_color)
-        # print(actual_colors)
+        print(actual_colors)
 
-    assert expected_colors == actual_colors, f'Expected {expected_colors} did not match actual {actual_colors}'
+    assert expected_colors == actual_colors, f"Expected {expected_colors} but got {actual_colors}"
