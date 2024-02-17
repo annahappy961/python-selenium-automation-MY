@@ -12,13 +12,12 @@ HEADER_LINKS = (By.CSS_SELECTOR, "[data-test*='@web/GlobalHeader/UtilityHeader']
 
 @given('Open Target main page')
 def open_target_main(context):
-    context.driver.get('https://www.target.com/')
+    context.app.main_page.open_main()
 
 
 @when('Search for {product}')
 def search_product(context, product):
-    context.driver.find_element(*SEARCH_FIELD).send_keys(product)
-    context.wait.until(EC.presence_of_element_located(SEARCH_ICON)).click()
+    context.app.header.search_product()
 
 
 @when('Click on Cart icon')
