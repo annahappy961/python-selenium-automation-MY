@@ -13,3 +13,9 @@ class Page:
 
     def input_text(self, text, *locator):
         self.driver.find_element(*locator).send_keys(text)
+
+    def get_text(self, *locator):
+        return self.driver.find_element(*locator).text
+
+    # def compare_two_variables(self, expected, actual):
+    #     assert {expected} in {actual}, f"Expected {expected} but got {actual}"

@@ -19,24 +19,25 @@ def open_cart(context):
     context.driver.get('https://www.target.com/cart')
 
 
-@then("Verify Your cart is empty message is shown")
-def verify_cart_empty_message(context):
-    sleep(10)
-    actual_text = context.driver.find_element(*CART_HEADER).text
-    assert "Your cart is empty" in actual_text, f"Expected 'Your cart is empty' but got {actual_text}"
+@then("Verify {empty_cart_message} message seen")
+def verify_cart_empty_message(context, empty_cart_message):
+    #     sleep(10)
+    #     actual_text = context.driver.find_element(*CART_HEADER).text
+    #     assert "Your cart is empty" in actual_text, f"Expected 'Your cart is empty' but got {actual_text}"
+    context.app.cart_page.verify_cart_empty_message(empty_cart_message)
 
 
 @then("Verify SignIn btn is clickable on empty cart page")
-def click_signin_btn_empty_cart(context):
-    context.driver.find_element(*SIGNIN_BTN_EMPTY_CART).click()
+def empty_cart_signin_btn_click(context):
+    context.app.cart_page.empty_cart_signin_btn_click()
 
 
-@then("Verify Bullseye empty cart is seen")
-def verify_bullseye_empy_cart_seen(context):
-    context.driver.find_element(*BULLSEYE_IMG_EMPY_CART)
+# @then("Verify Bullseye empty cart is seen")
+# def verify_bullseye_empy_cart_seen(context):
+#     context.driver.find_element(*BULLSEYE_IMG_EMPY_CART)
 
 
-@then("Verify the Total Price is shown")
+@then("Verify the Total Price in shown")
 def total_price_shown(context):
     context.wait.until(EC.presence_of_element_located(CART_SUMMARY_TOTAL), message='Element not located')
 
