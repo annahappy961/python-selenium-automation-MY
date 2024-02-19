@@ -20,9 +20,9 @@ def search_product(context, product):
     context.app.header.search_product()
 
 
-@when('Click on Cart icon')
+@when('Click on cart icon')
 def click_cart(context):
-    context.driver.find_element(*CART_ICON).click()
+    context.app.header.click_cart()
 
 
 @then('Verify header in shown')
