@@ -17,5 +17,6 @@ class Page:
     def get_text(self, *locator):
         return self.driver.find_element(*locator).text
 
-    # def compare_two_variables(self, expected, actual):
-    #     assert {expected} in {actual}, f"Expected {expected} but got {actual}"
+    # def verify_partial_text(self, expected_text, *locater):
+    #     actual_text = self.find_element(*locater)
+    #     assert expected_text in actual_text, f"Expected {expected_text} but got {actual_text}"

@@ -3,10 +3,8 @@ from behave import given, when, then
 from time import sleep
 from selenium.webdriver.support import expected_conditions as EC
 
-CART_HEADER = (By.CSS_SELECTOR, "h1[class*='StyledHeading']")
 CART_SUMMARY_TOTAL = (By.CSS_SELECTOR, "[data-test*='cart-summary-total']")
 TOTAL_PRICE = (By.CSS_SELECTOR, "[data-test*='cart-summary-total'] p")
-SIGNIN_BTN_EMPTY_CART = (By.CSS_SELECTOR, "[class*='ButtonPrimary']")
 BULLSEYE_IMG_EMPY_CART = (By.CSS_SELECTOR, "[data-test='empty-cart-bullseye-img']")
 PRODUCT_NAME = (By.CSS_SELECTOR, "[data-test='cartItem-title']")
 PRODUCT_PRICE = (By.CSS_SELECTOR, "div[class*='StyledHeading']")
