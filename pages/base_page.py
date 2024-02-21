@@ -1,5 +1,6 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from time import sleep
 
 
 class Page:
@@ -22,6 +23,9 @@ class Page:
     def input_text(self, text, *locator):
         self.driver.find_element(*locator).send_keys(text)
 
+    def get_text(self, *locator):
+        self.driver.find_element(*locator).text
+
     def wait_element_visible(self, *locator):
         self.wait.until(
             EC.visibility_of_element_located(locator),
@@ -30,7 +34,7 @@ class Page:
 
     def wait_element_clickable(self, *locator):
         self.wait.until(
-            EC.element_to_be_clickable(locator),
+            EC.element_to_be_clickable(*locator),
             message=f"Element by {locator} is not clickable"
         )
 
@@ -45,6 +49,11 @@ class Page:
             EC.url_changes(initial_url),
             message=f'Url did not change from {initial_url}'
         )
+
+    def window_scroll_down(self, scroll_amount=2000, num_scrolls=3):
+        for _ in range(num_scrolls):
+            self.driver.execute_script(f"window.scrollBy(0, {scroll_amount});")
+            sleep(2)
 
     def verify_text(self, expected_text, *locator):
         actual_text = self.driver.find_element(*locator).text
@@ -65,3 +74,8 @@ class Page:
         actual_url = self.driver.current_url
         assert expected_partial_url in actual_url, \
             f"Expected {expected_partial_url} not in {actual_url}"
+
+    def verify_amount_of_elements(self, expected_amount, *locator):
+        expected_amount = int(expected_amount)
+        actual_amount = len(self.driver.find_elements(*locator))
+        assert actual_amount == expected_amount, f"Expected {expected_amount} but got {actual_amount}"

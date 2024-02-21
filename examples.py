@@ -1,0 +1,1 @@
+driver.find_element("[class*='StyledVariationSelectorImage'] [class*='CellVariationHeaderWrapper']")

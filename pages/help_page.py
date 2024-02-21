@@ -1,0 +1,42 @@
+from selenium.webdriver.common.by import By
+from time import sleep
+
+from pages.base_page import Page
+
+
+class HelpPage(Page):
+    TARGET_HELP_TEXT = (By.XPATH, "//*[contains(text(), 'Target Help')]")
+    SEARCH_FIELD = (By.CSS_SELECTOR, ".search-input")
+    SEARCH_BTN = (By.CSS_SELECTOR, ".search-btn")
+    WHAT_WOULD_YOU_LIKE_TEXT = (By.CSS_SELECTOR, "h2.header")
+    BROWSE_ALL_HELP_PAGES_TEXT = (By.CSS_SELECTOR, ".grid_18 h2")
+    WHAT_WOULD_YOU_LIKE_ELEMENTS = (By.CSS_SELECTOR, "[class*='col'] [class*='grid_6']")
+    CONTACT_US_PRODUCT_RECALLS_ELEMENTS = (By.CSS_SELECTOR, ".grid_4")
+    BROWSE_ALL_HELP_PAGES_ELEMENTS = (By.CSS_SELECTOR, ".grid_6 li.expandable")
+
+    def open_target_help(self):
+        self.open("https://help.target.com/help")
+
+    def verify_target_help_text_shown(self, expected_text, *locator):
+        self.verify_text(expected_text, *self.TARGET_HELP_TEXT)
+
+    def verify_search_field_shown(self):
+        self.find_element(*self.SEARCH_FIELD)
+
+    def verify_search_btn_shown(self):
+        self.find_element(*self.SEARCH_BTN)
+
+    def verify_what_would_you_text_shown(self, expected_text, *locator):
+        self.verify_text(expected_text, *self.WHAT_WOULD_YOU_LIKE_TEXT)
+
+    def verify_browse_all_help_pages_text_shown(self, expected_text, *locator):
+        self.verify_text(expected_text, *self.BROWSE_ALL_HELP_PAGES_TEXT)
+
+    def verify_what_would_you_elements_shown(self, expected_amount, *locator):
+        self.verify_amount_of_elements(expected_amount, *self.WHAT_WOULD_YOU_LIKE_ELEMENTS)
+
+    def verify_contact_us_product_recalls_elements_shown(self, expected_amount, *locator):
+        self.verify_amount_of_elements(expected_amount, *self.CONTACT_US_PRODUCT_RECALLS_ELEMENTS)
+
+    def verify_browse_all_help_elements_shown(self, expected_amount, *locator):
+        self.verify_amount_of_elements(expected_amount, *self.BROWSE_ALL_HELP_PAGES_ELEMENTS)

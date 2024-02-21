@@ -8,13 +8,13 @@ TOTAL_PRICE = (By.CSS_SELECTOR, "[data-test*='cart-summary-total'] p")
 BULLSEYE_IMG_EMPY_CART = (By.CSS_SELECTOR, "[data-test='empty-cart-bullseye-img']")
 PRODUCT_NAME = (By.CSS_SELECTOR, "[data-test='cartItem-title']")
 PRODUCT_PRICE = (By.CSS_SELECTOR, "div[class*='StyledHeading']")
-CART_SUMMARY = (By.CSS_SELECTOR, "[class*='CartSummarySpan']")
+
 CART_ITEM_TITLE = (By.CSS_SELECTOR, "[data-test='cartItem-title']")
 
 
 @when('Open cart page')
 def open_cart(context):
-    context.driver.get('https://www.target.com/cart')
+    context.open()
 
 
 @then("Verify {empty_cart_message} message seen")
@@ -30,20 +30,9 @@ def empty_cart_signin_btn_click(context):
     context.app.cart_page.empty_cart_signin_btn_click()
 
 
-# @then("Verify Bullseye empty cart is seen")
-# def verify_bullseye_empy_cart_seen(context):
-#     context.driver.find_element(*BULLSEYE_IMG_EMPY_CART)
-
-
-@then("Verify the Total Price in shown")
-def total_price_shown(context):
-    context.wait.until(EC.presence_of_element_located(CART_SUMMARY_TOTAL), message='Element not located')
-
-
-@then("Verify cart has {amount} item(s)")
-def verify_cart_items(context, amount):
-    cart_summery = context.wait.until(EC.presence_of_element_located(CART_SUMMARY)).text
-    assert amount in cart_summery, f"Expected items {amount} but got {cart_summery}"
+@then("Verify cart has {expected_amount} item(s)")
+def verify_cart_items(context, expected_amount):
+    context.app.cart_page.verify_cart_items(expected_amount)
 
 
 @then("Verify cart has correct product name")
