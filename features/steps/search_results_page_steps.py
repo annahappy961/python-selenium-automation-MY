@@ -6,7 +6,6 @@ from selenium.webdriver.common.keys import Keys
 
 SEARCH_RESULTS_HEADER = (By.XPATH, "//div[@data-test='resultsHeading']")
 PRODUCT_NAME = (By.CSS_SELECTOR, "[data-test*='product-title']")
-
 ADD_TO_CART_BTN = (By.CSS_SELECTOR, "[id*='addToCartButton']")
 
 
@@ -32,14 +31,12 @@ def click_add_to_cart(context):
 
 @when("Store product name")
 def store_product_name(context):
-    product_name = context.app.side_navigation_menu.store_product_name()
-    context.product_name = product_name
+    context.app.side_navigation_menu.store_product_name(context)
 
 
 @when("Store product price")
 def store_product_price(context):
-    product_price = context.app.side_navigation_menu.store_product_price()
-    context.product_price = product_price
+    context.app.side_navigation_menu.store_product_price(context)
 
 
 @when('Close side navigation')
@@ -58,18 +55,19 @@ def click_add_to_cart_by_index(context, i):
 
 @when('Store product name to a list')
 def store_product_names(context):
-    context.wait.until(EC.presence_of_element_located(SIDE_NAV_PRODUCT_NAME), message='Side nav did not open')
-    # Why is it here?
-
-    # TARGET_HELP_H2 = (By.XPATH, '')
-    # context.wait.until(
-    #     EC.text_to_be_present_in_element(TARGET_HELP_H2, 'Target Help'),
-    #     message="'Target Help' text did not appear")
-    current_product_name = context.driver.find_element(*SIDE_NAV_PRODUCT_NAME).text
-    try:  # try to add a product to context.product_names:
-        context.product_names.append(current_product_name)
-    except AttributeError:  # if context.product_names not set, set it and put the current_product_name itno it:
-        context.product_names = [current_product_name]
+    context.app.side_navigation_menu.store_product_names(context)
+    # context.wait.until(EC.presence_of_element_located(SIDE_NAV_PRODUCT_NAME), message='Side nav did not open')
+    # # Why is it here?
+    #
+    # # TARGET_HELP_H2 = (By.XPATH, '')
+    # # context.wait.until(
+    # #     EC.text_to_be_present_in_element(TARGET_HELP_H2, 'Target Help'),
+    # #     message="'Target Help' text did not appear")
+    # current_product_name = context.driver.find_element(*SIDE_NAV_PRODUCT_NAME).text
+    # try:  # try to add a product to context.product_names:
+    #     context.product_names.append(current_product_name)
+    # except AttributeError:  # if context.product_names not set, set it and put the current_product_name itno it:
+    #     context.product_names = [current_product_name]
 
 
 @then("Verify that every product has a title and an image")

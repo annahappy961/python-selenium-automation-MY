@@ -24,7 +24,12 @@ class Page:
         self.driver.find_element(*locator).send_keys(text)
 
     def get_text(self, *locator):
-        return self.driver.find_element(*locator).text
+        self.wait.until(
+            EC.visibility_of_element_located(locator),
+            message=f"Element by {locator} is not visible"
+        )
+        element = self.driver.find_element(*locator).text
+        return element
 
     def wait_element_visible(self, *locator):
         self.wait.until(
