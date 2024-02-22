@@ -16,7 +16,7 @@ def add_product_to_cart(context):
 
 @when("Click View cart & check out from side navigation")
 def open_cart_from_side_navigation(context):
-    context.app.side_navigation_manu.open_cart_from_side_navigation()
+    context.app.side_navigation_menu.open_cart_from_side_navigation()
 
 
 @then('Verify user can click through colors')

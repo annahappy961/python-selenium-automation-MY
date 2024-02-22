@@ -6,15 +6,15 @@ from selenium.webdriver.support import expected_conditions as EC
 CART_SUMMARY_TOTAL = (By.CSS_SELECTOR, "[data-test*='cart-summary-total']")
 TOTAL_PRICE = (By.CSS_SELECTOR, "[data-test*='cart-summary-total'] p")
 BULLSEYE_IMG_EMPY_CART = (By.CSS_SELECTOR, "[data-test='empty-cart-bullseye-img']")
-PRODUCT_NAME = (By.CSS_SELECTOR, "[data-test='cartItem-title']")
-PRODUCT_PRICE = (By.CSS_SELECTOR, "div[class*='StyledHeading']")
+
+CART_SUMMARY = (By.CSS_SELECTOR, "[class*='CartSummarySpan']")
 
 CART_ITEM_TITLE = (By.CSS_SELECTOR, "[data-test='cartItem-title']")
 
 
 @when('Open cart page')
 def open_cart(context):
-    context.open()
+    context.app.cart_page.open_cart()
 
 
 @then("Verify {empty_cart_message} message seen")
@@ -37,16 +37,19 @@ def verify_cart_items(context, expected_amount):
 
 @then("Verify cart has correct product name")
 def verify_product_name(context):
-    actual_name = context.driver.find_element(*PRODUCT_NAME).text
-    assert context.product_name in actual_name, f"Expected {context.product_name} but got {actual_name}"
+    context.app.cart_page.verify_product_name()
+    # actual_name = context.driver.find_element(*PRODUCT_NAME).text
+    # assert context.product_name in actual_name, \
+    #     f"Expected {context.product_name} but got {actual_name}"
 
 
 @then("Verify cart has correct product price")
 def verify_product_price(context):
-    actual_price = context.driver.find_element(*PRODUCT_PRICE).text
+    actual_price = context.driver.find_element(*CART_SUMMARY).text
     actual_price = actual_price.split()[0]
     # print(actual_price)
-    assert actual_price == context.product_price, f"Expected {context.product_price} but got {actual_price}"
+    assert actual_price == context.product_price, \
+        f"Expected {context.product_price} but got {actual_price}"
 
 
 @then('Verify cart has correct multiple products')

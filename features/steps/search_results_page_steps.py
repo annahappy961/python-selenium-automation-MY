@@ -5,11 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
 SEARCH_RESULTS_HEADER = (By.XPATH, "//div[@data-test='resultsHeading']")
-
-SIDE_NAV_PRODUCT_NAME = (By.CSS_SELECTOR, "[data-test='content-wrapper'] h4")
-
 PRODUCT_NAME = (By.CSS_SELECTOR, "[data-test*='product-title']")
-PRODUCT_PRICE = (By.CSS_SELECTOR, "[class*='h-text-bold h-display']")
+
 ADD_TO_CART_BTN = (By.CSS_SELECTOR, "[id*='addToCartButton']")
 
 
@@ -35,12 +32,14 @@ def click_add_to_cart(context):
 
 @when("Store product name")
 def store_product_name(context):
-    context.product_name = context.driver.find_element(*SIDE_NAV_PRODUCT_NAME).text
+    product_name = context.app.side_navigation_menu.store_product_name()
+    context.product_name = product_name
 
 
 @when("Store product price")
 def store_product_price(context):
-    context.product_price = context.driver.find_element(*PRODUCT_PRICE).text
+    product_price = context.app.side_navigation_menu.store_product_price()
+    context.product_price = product_price
 
 
 @when('Close side navigation')
