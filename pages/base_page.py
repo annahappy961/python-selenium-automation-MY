@@ -24,7 +24,7 @@ class Page:
         self.driver.find_element(*locator).send_keys(text)
 
     def get_text(self, *locator):
-        self.driver.find_element(*locator).text
+        return self.driver.find_element(*locator).text
 
     def wait_element_visible(self, *locator):
         self.wait.until(

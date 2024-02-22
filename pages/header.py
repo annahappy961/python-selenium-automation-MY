@@ -10,6 +10,7 @@ class Header(Page):
     CART_ICON = (By.CSS_SELECTOR, "[data-test='@web/CartLink']")
     HEADER = (By.CSS_SELECTOR, "[class*='UtilityHeaderWrapper']")
     HEADER_LINKS = (By.CSS_SELECTOR, "[data-test*='@web/GlobalHeader/UtilityHeader']")
+    SIGN_IN = (By.CSS_SELECTOR, "[data-test='@web/AccountLink']")
 
     def search_product(self, search_product):
         self.input_text(search_product, *self.SEARCH_FIELD)
@@ -29,3 +30,5 @@ class Header(Page):
         header_links = self.find_elements(*self.HEADER_LINKS)
         assert len(header_links) == expected_amount, f'Expected {expected_amount} links, but got {len(header_links)}'
 
+    def sign_in_click(self):
+        self.wait_element_clickable_click(*self.SIGN_IN)

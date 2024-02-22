@@ -7,6 +7,7 @@ from pages.main_page import MainPage
 from pages.product_details_page import ProductDetailsPage
 from pages.search_results_page import SearchResultsPage
 from pages.side_navigation_menu import SideNavigationMenu
+from pages.sign_in_page import SignInPage
 
 
 class Application:
@@ -21,4 +22,5 @@ class Application:
         self.product_details_page = ProductDetailsPage(driver)
         self.search_results_page = SearchResultsPage(driver)
         self.side_navigation_menu = SideNavigationMenu(driver)
+        self.sign_in_page = SignInPage(driver)
 
