@@ -15,8 +15,8 @@ class SignInPage(Page):
         self.verify_text(expected_text, *self.SIGN_IN_TEXT)
 
     def input_user_email_password(self):
-        self.input_text("nykeila@gudri.com", *self.INPUT_EMAIL)
-        self.input_text("Test1Test12024", *self.INPUT_PASSWORD)
+        self.input_text("", *self.INPUT_EMAIL)
+        self.input_text("", *self.INPUT_PASSWORD)
 
     def click_sign_in(self):
         self.click(*self.SIGN_IN_BTN)
