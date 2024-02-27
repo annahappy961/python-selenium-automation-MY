@@ -31,6 +31,14 @@ class Page:
         element = self.driver.find_element(*locator).text
         return element
 
+    def switch_to_new_window(self):
+        self.wait.until(EC.new_window_is_opened)
+        all_windows = self.driver.window_handles  # [window1, window2]
+        self.driver.switch_to.window(all_windows[1])
+
+    def switch_to_window_by_id(self, window_id):
+        self.driver.switch_to.window(window_id)
+
     def wait_element_visible(self, *locator):
         self.wait.until(
             EC.visibility_of_element_located(locator),
