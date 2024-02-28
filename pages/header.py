@@ -1,3 +1,4 @@
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from time import sleep
 
@@ -11,6 +12,8 @@ class Header(Page):
     HEADER = (By.CSS_SELECTOR, "[class*='UtilityHeaderWrapper']")
     HEADER_LINKS = (By.CSS_SELECTOR, "[data-test*='@web/GlobalHeader/UtilityHeader']")
     SIGN_IN = (By.CSS_SELECTOR, "[data-test='@web/AccountLink']")
+    SIGNIN_IN_ARROW = (By.CSS_SELECTOR, "[data-test='@web/AccountLink'] > div > svg.expander")
+    SIGNIN_BTN = (By.CSS_SELECTOR, "[data-test='@web/AccountLink']")
 
     def search_product(self, search_product):
         self.input_text(search_product, *self.SEARCH_FIELD)
@@ -32,3 +35,12 @@ class Header(Page):
 
     def sign_in_click(self):
         self.wait_element_clickable_click(*self.SIGN_IN)
+
+    def hover_signin_btn(self):
+        sign_in_btn = self.wait_element_visible(*self.SIGNIN_BTN)
+        actions = ActionChains(self.driver)
+        actions.move_to_element(sign_in_btn)
+        actions.perform()
+
+    def verify_signin_arrow(self):
+        self.wait_element_visible(*self.SIGNIN_IN_ARROW)
