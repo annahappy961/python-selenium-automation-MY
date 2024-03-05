@@ -24,7 +24,7 @@ def click_cart(context):
 
 @then('Verify header in shown')
 def verify_header(context):
-    context.app.header.verify_header()
+    context.app.header.verify_header_shown()
 
 
 @then('Verify header has {expected_amount} links')

@@ -55,6 +55,8 @@ class HelpPage(Page):
         self.open('https://help.target.com/help/SubCategoryArticle?childcat=Returns&parentcat=Returns+%26+Exchanges')
 
     def select_topic(self, help_topic):
+        print(f"Trying to find element: {self.TOPIC_SELECTION}")
+        self.wait_element_visible(*self.TOPIC_SELECTION)
         topics_dd = self.find_element(*self.TOPIC_SELECTION)
         select = Select(topics_dd)
         select.select_by_value(help_topic)

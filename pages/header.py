@@ -23,7 +23,7 @@ class Header(Page):
     def click_cart(self):
         self.click(*self.CART_ICON)
 
-    def verify_header(self):
+    def verify_header_shown(self):
         # header = context.driver.find_element(*HEADER)
         # print(header)
         self.find_element(*self.HEADER)
@@ -37,7 +37,7 @@ class Header(Page):
         self.wait_element_clickable_click(*self.SIGN_IN)
 
     def hover_signin_btn(self):
-        sign_in_btn = self.wait_element_visible(*self.SIGNIN_BTN)
+        sign_in_btn = self.find_elements(*self.SIGNIN_BTN)
         actions = ActionChains(self.driver)
         actions.move_to_element(sign_in_btn)
         actions.perform()

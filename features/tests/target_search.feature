@@ -12,6 +12,7 @@ Feature: Target.com search tests
     Then Search results for coffee mug are shown
     Then Page URL has search term coffee+mug
 
+  @smoke
   Scenario Outline: User can search for a product on target
     Given Open Target main page
     When Search for <search_word>
