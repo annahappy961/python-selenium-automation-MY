@@ -6,12 +6,14 @@ Feature: Cart tests
     Then Verify Your cart is empty message seen
     And Verify SignIn btn is clickable on empty cart page
 
+
   Scenario: Verify product added to cart
     Given Open target product A-52770446 page
     When Add product to cart from PP
     When Click View cart & check out from side navigation
     Then Verify cart has 1 item(s)
 
+  @smoke
   Scenario: User can add a product to cart
     Given Open Target main page
     When Search for candy bags
