@@ -11,6 +11,7 @@ class SignInPage(Page):
     SIGN_IN_BTN = (By.CSS_SELECTOR, "#login")
     NEXT_BTN = (By.CSS_SELECTOR, "#capturePhone")
     TERMS_CONDITIONS_LINK = (By.CSS_SELECTOR, "[aria-label*='terms & conditions']")
+    INCORRECT_EMAIL_ALERT_DISPLAY = (By.XPATH, "//*[@data-test='authAlertDisplay']//div")
 
     # def open_sign_in_page(self):
     #     self.open(
@@ -22,9 +23,12 @@ class SignInPage(Page):
     def click_terms_conditions_link(self):
         self.wait_element_clickable_click(*self.TERMS_CONDITIONS_LINK)
 
-    def input_user_email_password(self):
-        self.input_text("nykeila@gudri.com", *self.INPUT_EMAIL)
-        self.input_text("Test1Test12024", *self.INPUT_PASSWORD)
+    # def input_user_email_password(self, email, password):
+    #     self.input_text("nykeila@gudri.com", *self.INPUT_EMAIL)
+    #     self.input_text("Test1Test12024", *self.INPUT_PASSWORD)
+    def input_user_email_password(self, email, password):
+        self.input_text(email, *self.INPUT_EMAIL)
+        self.input_text(password, *self.INPUT_PASSWORD)
 
     def verify_user_logged_in(self):
         self.wait_element_clickable(self.NEXT_BTN)
@@ -34,3 +38,6 @@ class SignInPage(Page):
 
     def verify_terms_conditions_page_open(self):
         self.verify_partial_url("https://www.target.com/c/terms-conditions/")
+
+    def verify_wrong_email_text_shown(self, expected_text, *locator):
+        self.verify_text(expected_text, *self.INCORRECT_EMAIL_ALERT_DISPLAY)
