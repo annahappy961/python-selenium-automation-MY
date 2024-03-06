@@ -16,9 +16,9 @@ def account_sign_in_click(context):
     context.app.side_navigation_menu.account_sign_in_click()
 
 
-@when("Input email and password on SighIn page")
-def input_user_email_password(context):
-    context.app.sign_in_page.input_user_email_password()
+@when("Input {email} and {password} on SigIn page")
+def input_user_email_password(context, email, password):
+    context.app.sign_in_page.input_user_email_password(email, password)
 
 
 @when("Store original windows")
@@ -64,3 +64,8 @@ def close_terms_conditions_tab(context):
 @then("User can switch back to original")
 def switch_to_original_window(context):
     context.app.sign_in_page.switch_to_window_by_id(context.original_window)
+
+
+@then("Verify {expected_text} is shown on page")
+def verify_wrong_email_text_shown(context, expected_text):
+    context.app.sign_in_page.verify_wrong_email_text_shown(expected_text)

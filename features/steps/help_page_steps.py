@@ -17,10 +17,6 @@ def open_target_help_returns(context):
 def select_promotions(context, help_topic):
     context.app.help_page.select_topic(help_topic)
 
-# @then('Verify Returns page opened')
-# def verify_returns_opened(context):
-#    context.app.help_page.verify_returns_opened()
-#
 #
 # @then('Verify Current promotions page opened')
 # def verify_promotions_opened(context):

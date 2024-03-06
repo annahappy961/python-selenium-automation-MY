@@ -16,6 +16,7 @@ class HelpPage(Page):
     BROWSE_ALL_HELP_PAGES_ELEMENTS = (By.CSS_SELECTOR, ".grid_6 li.expandable")
     HEADER_RETURNS = (By.XPATH, "//h1[text()=' Returns']")
     HEADER_PROMOTIONS = (By.XPATH, "//h1[text()=' Current promotions']")
+    HEADER_ACCOUNT = (By.XPATH, "//h1[text()=' Create account']")
     HEADER = (By.XPATH, "//h1[text()=' {HEADER_TEXT}']")
     TOPIC_SELECTION = (By.CSS_SELECTOR, "select[id*='ViewHelpTopics']")
 
@@ -61,13 +62,18 @@ class HelpPage(Page):
         select = Select(topics_dd)
         select.select_by_value(help_topic)
 
-    def verify_returns_opened(self):
-        self.wait_element_visible(*self.HEADER_RETURNS)
-
-    def verify_promotions_opened(self):
-        self.wait_element_visible(*self.HEADER_PROMOTIONS)
-
     def verify_header(self, expected_header_text):
         locator = self._get_header_locator(expected_header_text)
+        print(f"Expected Header Text: {expected_header_text}")
         print(locator)
         self.wait_element_visible(*locator)
+
+    #
+    # def verify_returns_opened(self):
+    #     self.wait_element_visible(*self.HEADER_RETURNS)
+    #
+    # def verify_promotions_opened(self):
+    #     self.wait_element_visible(*self.HEADER_PROMOTIONS)
+    #
+    # def verify_help_create_account_page_opened(self):
+    #     self.wait_element_visible(*self.HEADER_ACCOUNT)
